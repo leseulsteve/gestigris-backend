@@ -1,0 +1,41 @@
+{% extends "../../../../../notifications/transmitters/mail/templates/layout.nunjucks" %}
+
+{% block content %}
+
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+      <td>
+
+        <table align="left" cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr><td class="mui--text-title">{{ etablissement.name }}</td></tr>
+          <tr><td class="mui--text-subhead">{{ intervention.date.start | date }}</td></tr>
+          <tr><td>De {{ intervention.date.start | date('LT') }} à {{ intervention.date.end | date('LT') }}</td></tr>
+        </table>
+
+      </td>
+    </tr>
+    <tr><td class="horizontal-margin"></td><tr>
+  </table>
+
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr class="mui--divider-top"><td class="horizontal-margin"></td><tr>
+    <tr>
+      <td>
+
+        <table align="left" cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr><td>Vous aviez offert votre disponibilité pour cet atelier de démystification.</td></tr>
+          <tr><td>Nous vous informons que cet atelier ne vous a pas été assigné.</td></tr>
+          <tr><td class="horizontal-margin"></td><tr>
+          <tr><td>Les ateliers sont assignés en tenant compte des critères suivants : présenter des duos mixtes (homme/femme), attribuer le plus équitablement possible les ateliers entre les membres, former des duos équilibrés (expérimentés/récemment formés), etc.</td></tr>
+          <tr><td class="horizontal-margin"></td><tr>
+          <tr><td>De nouveaux ateliers ont peut-être été ajoutés au calendrier depuis votre dernière visite.</td><tr>
+          <tr><td>Cliquez sur le lien suivant pour le consulter: [INSÉRER LIEN VERS GESTIGRIS].</td><tr>
+          <tr><td class="horizontal-margin"></td><tr>
+          <tr><td>En vous remerciant pour votre intérêt et disponibilité!</td><tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+{% endblock %}

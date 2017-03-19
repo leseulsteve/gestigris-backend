@@ -1,0 +1,25 @@
+.mui-body {
+  background-color: #f5f5f5;
+}
+
+.vertical-margin {
+  width: 16px;
+}
+
+.horizontal-margin {
+  height: 16px;
+}
+
+@media only screen and (max-width: 480px) {
+  .templateColumnContainer{
+    display:block !important;
+    width:100% !important;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .titleColumnContainer {
+    display:block !important;
+    width:100% !important;
+  }
+}

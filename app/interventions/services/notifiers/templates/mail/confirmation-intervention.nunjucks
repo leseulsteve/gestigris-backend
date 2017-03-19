@@ -1,0 +1,96 @@
+{% extends "../../../../../notifications/transmitters/mail/templates/layout.nunjucks" %}
+
+{% block content %}
+
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+      <td>
+
+        <table align="left" cellpadding="0" cellspacing="0" border="0" width="400" class="titleColumnContainer">
+          <tr><td class="mui--text-title">{{ intervention.etablissement.name }}</td></tr>
+          <tr><td class="mui--text-subhead">{{ intervention.date.start | date }}</td></tr>
+          <tr><td>De {{ intervention.date.start | date('LT') }} à {{ intervention.date.end | date('LT') }}</td></tr>
+        </table>
+
+        <table align="right" cellpadding="0" cellspacing="0" border="0" width="250" class="titleColumnContainer">
+          <tr> <td class="horizontal-margin"></td><tr>
+          <tr>
+            <td colspan="2" class="mui--text-right">
+              <a href="" target="_blank" class="mui-btn mui-btn--small mui-btn--primary">Voir intervention</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="mui--text-right">
+              <a href="{{ intervention.etablissement.coordinates | googleMap }}" target="_blank" class="mui-btn mui-btn--small mui-btn--flat mui-btn--primary">Google maps</a>
+            </td>
+            <td style="width:20px"></td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+    <tr><td class="horizontal-margin"></td></tr>
+  </table>
+
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr class="mui--divider-top"><td class="horizontal-margin"></td><tr>
+    <tr>
+      <td>
+
+        <table align="left" cellpadding="0" cellspacing="0" border="0" width="250" class="templateColumnContainer">
+          <tr><td class="mui--text-caption">Responsable de groupe</td></tr>
+          <tr><td class="mui--text-subhead">{{ intervention.responsableGroupe }}</td></tr>
+          <tr><td class="horizontal-margin"></td><tr>
+          <tr><td class="mui--text-caption">Local</td></tr>
+          <tr><td class="mui--text-subhead">{{ intervention.local }}</td></tr>
+          <tr><td class="horizontal-margin"></td><tr>
+        </table>
+
+        <table align="left" cellpadding="0" cellspacing="0" border="0" width="250" class="templateColumnContainer">
+          <tr><td class="mui--text-caption">Lieu de rencontre</td></tr>
+          <tr><td class="mui--text-subhead">{{ intervention.lieuRencontre }}</td></tr>
+          <tr><td class="horizontal-margin"></td><tr>
+          <tr><td class="mui--text-caption">Mots clefs</td></tr>
+          <tr><td class="mui--text-subhead">{% for tag in intervention.tags %}{{tag.name}}{% if not loop.last %}, {% endif %}{% endfor %}</td></tr>
+          <tr><td class="horizontal-margin"></td><tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr class="mui--divider-top"><td class="horizontal-margin"></td><tr>
+    <tr><td class="mui--text-caption">Participants</td><tr>
+    <tr><td class="horizontal-margin"></td><tr>
+    <tr>
+      <td>
+        {% for participant in intervention.participants %}
+        <table align="left" cellpadding="0" cellspacing="0" border="0" width="250" class="templateColumnContainer">
+          <tr>
+            <td class="mui--text-subhead">{{ participant.prenom }} {{ participant.nomFamille }}</td>
+          </tr>
+          <tr>
+            <td>{{ participant.role.description }}</td>
+          </tr>
+          <tr><td class="horizontal-margin"></td><tr>
+        </table>
+        {% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <td class="mui--text-caption">
+        Il est fortement conseillé de communiquer avec vos collègues avant l'intervention au sujet de l'heure de rencontre et du co-voiturage par exemple.
+      </td>
+    </tr>
+    <tr><td class="horizontal-margin"></td><tr>
+  </table>
+
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr class="mui--divider-top"><td class="horizontal-margin"></td><tr>
+    <tr><td class="mui--text-caption">Notes sur l'établissement</td></tr>
+    <tr><td class="mui--text-subhead">{{ intervention.etablissement.notes.public }}</td></tr>
+  </table>
+
+
+{% endblock %}

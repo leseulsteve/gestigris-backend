@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width"/>
+  </head>
+  <body>
+    <table class="mui-body" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+      <tr>
+        <td class="vertical-margin"></td>
+        <td>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr><td class="horizontal-margin"><td></tr>
+            <tr><td style="height:71px;"><img width="150px" src="cid:logo"/></td></tr>
+            <tr><td><h3>{{ title }}</h3></td></tr>
+          </table>
+        </td>
+        <td class="vertical-margin"></td>
+      </tr>
+
+      <tr>
+        <td class="vertical-margin"></td>
+        <td>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr><td class="horizontal-margin"><td></tr>
+            <tr><td class="mui-panel">{% block content %} {% endblock %}</td></tr>
+          </table>
+        </td>
+        <td class="vertical-margin"></td>
+      </tr>
+
+      <tr>
+        <td class="vertical-margin"></td>
+        <td>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr><td class="horizontal-margin"><td></tr>
+            <tr><td class="mui--text-caption mui--text-center">En cas de problème, prière de contacter la coordination des services d’information au 418-523-5572, <a href="mailto:demystification@grisquebec.org" target="_top">demystification@grisquebec.org</a>.</td></tr>
+          </table>
+        </td>
+        <td class="vertical-margin"></td>
+      </tr>
+
+      <tr><td colspan="3" class="horizontal-margin"><td></tr>
+
+    </table>
+  </body>
+</html>
