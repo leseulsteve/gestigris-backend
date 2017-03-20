@@ -38,15 +38,12 @@ module.exports = {
           })
           .populate({
             path: 'benevole',
-            select: 'prenom nomFamille role',
-            lean: true,
             populate: {
               path: 'role',
               select: 'description',
               lean: true
             }
           })
-          .lean()
           .then(function(demandesParticipation) {
 
             return notificationsService.notify({

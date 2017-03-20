@@ -4,6 +4,7 @@
   "dependencies": {
     "app-root-path": "^2.0.1",
     "chalk": "^1.1.0",
+    "cron": "^1.2.1",
     "express-base": "git+https://github.com/leseulsteve/express-base.git",
     "express-user-auth": "git+https://github.com/leseulsteve/express-user-auth.git",
     "jsonwebtoken": "^7.3.0",

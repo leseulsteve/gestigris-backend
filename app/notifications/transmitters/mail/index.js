@@ -72,7 +72,7 @@ module.exports = {
           extraCss: css
         })
       }), function(error, result) {
-        if (error) return q.reject(error);
+        if (error) defered.reject(error);
         defered.resolve(result);
       });
     });

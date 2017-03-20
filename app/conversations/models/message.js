@@ -22,7 +22,13 @@ var MessageSchema = new Schema({
   readBy: [{
     type: Schema.ObjectId,
     ref: 'User'
-  }]
+  }],
+  attachement: {
+    type: {
+      type: String
+    },
+    data: {}
+  }
 });
 
 MessageSchema.plugin(timestamps);

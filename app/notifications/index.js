@@ -2,7 +2,6 @@
 
 var _ = require('lodash'),
   q = require('q'),
-  User = require('../models/user'),
   transmitters = require('./transmitters');
 //var notificationConfigController = require('./controllers/notification-config.controller.js');
 
@@ -16,41 +15,21 @@ module.exports = {
   // groups
   notify: function(params) {
 
-    function notifyTransmitters(config) {
-      return q.all(_.map(params.transmittersConfig, function(templatePath, transmitterName) {
-        return transmitters[transmitterName].notify(_.assign(config, {
-          subject: params.subject,
-          title: params.title,
-          templatePath: templatePath,
-          data: params.data
-        })).then(function(results) {
-          return {
-            transmitterName: transmitterName,
-            results: results
-          };
-        });
-      }));
-    }
-
-    if (params.receiver) {
-      return User.findById(params.receiver).then(function(user) {
-        notifyTransmitters({
-          receiver: user
-        });
+    return q.all(_.map(params.transmittersConfig, function(templatePath, transmitterName) {
+      return transmitters[transmitterName].notify({
+        receiver: params.receiver,
+        receivers: params.receivers,
+        subject: params.subject,
+        title: params.title,
+        templatePath: templatePath,
+        data: params.data
+      }).then(function(results) {
+        return {
+          transmitterName: transmitterName,
+          results: results
+        };
       });
-    }
-
-    if (params.receivers) {
-      return User.find({
-        _id: {
-          $in: params.receivers
-        }
-      }).then(function(users) {
-        notifyTransmitters({
-          receivers: users
-        });
-      });
-    }
+    }));
   }
 };
 

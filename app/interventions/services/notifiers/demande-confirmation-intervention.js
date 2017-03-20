@@ -8,7 +8,8 @@ var _ = require('lodash'),
   notificationsService = require('../../../notifications'),
   Intervention = require('../../models/intervention.model'),
   DemandeParticipation = require('../../models/demande-participation.model'),
-  ConversationService = require('../../../conversations/services/conversation.service');
+  ConversationService = require('../../../conversations/services/conversation.service'),
+  Benevole = require('../../../benevoles/models/benevole.model');
 
 function getIntervention(interventionId) {
   return Intervention
@@ -69,37 +70,42 @@ module.exports = {
 
   notify: function(demandeParticipation, message, user) {
 
-    return getIntervention(demandeParticipation.intervention)
-      .then(function(intervention) {
+    return Benevole.populate(demandeParticipation, {
+      path: 'benevole'
+    }).then(function(demandeParticipation) {
 
-        var subject = 'Confirmation - ' + intervention.plage.etablissement.name + ' - ' + moment(intervention.date.start).format('LLL');
+      return getIntervention(demandeParticipation.intervention)
+        .then(function(intervention) {
 
-        return q.all([
+          var subject = 'Confirmation - ' + intervention.plage.etablissement.name + ' - ' + moment(intervention.date.start).format('LLL');
 
-          createConversation(demandeParticipation.benevole, user, subject, message),
-          getDemandesParticipation(demandeParticipation._id, intervention._id)
+          return q.all([
 
-        ]).then(function(results) {
+            createConversation(demandeParticipation.benevole, user, subject, message),
+            getDemandesParticipation(demandeParticipation._id, intervention._id)
 
-          var data = {
-            message: message,
-            intervention: _.assign(intervention, {
-              participants: _.map(_.last(results), 'benevole'),
-              etablissement: intervention.plage.etablissement
-            }),
-            confirmLink: config.interventionAppUrl + 'conversations/' + _.first(results)._id
-          }
+          ]).then(function(results) {
 
-          return notificationsService.notify({
-            receiver: demandeParticipation.benevole,
-            subject: subject,
-            title: 'Demande de confirmation de participation à une intervention',
-            transmittersConfig: {
-              mail: path.join(__dirname, 'templates/mail/demande-confirmation-intervention.nunjucks')
-            },
-            data: data
+            var data = {
+              message: message,
+              intervention: _.assign(intervention, {
+                participants: _.map(_.last(results), 'benevole'),
+                etablissement: intervention.plage.etablissement
+              }),
+              confirmLink: config.interventionAppUrl + 'conversations/' + _.first(results)._id
+            }
+
+            return notificationsService.notify({
+              receiver: demandeParticipation.benevole,
+              subject: subject,
+              title: 'Demande de confirmation de participation à une intervention',
+              transmittersConfig: {
+                mail: path.join(__dirname, 'templates/mail/demande-confirmation-intervention.nunjucks')
+              },
+              data: data
+            });
           });
         });
-      });
+    });
   }
 };
