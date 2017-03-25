@@ -5,11 +5,10 @@ var CronJob = require('cron').CronJob,
   PlageIntervention = require('./models/plage.model'),
   ContactConfirmation = require('./services/notifiers/contact-confirmation');
 
-new CronJob('5 0 * * * *', function() {
-  console.log('CRON', new Date());
+new CronJob('00 00 06 * * *', function() { // Tous les jours à 6hrs
   PlageIntervention.find({
       date: {
-        $lte: moment().endOf('day').add(2, 'weeks')
+        $lte: moment().endOf('day').add(72, 'hours')
       },
       status: 'CLOSE',
       contactNotified: false
@@ -27,7 +26,7 @@ new CronJob('5 0 * * * *', function() {
           });
       });
     });
-}, null, true, 'America/Los_Angeles');
+}, null, true);
 
 module.exports = {
   plageIntervention: require('./services/plage-intervention.service'),

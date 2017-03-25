@@ -22,7 +22,7 @@
       <td>
 
         <table align="left" cellpadding="0" cellspacing="0" border="0" width="100%">
-          <tr><td>Vous recevez ce message parce que vous avez fait au moins une demande d’intervention dans votre milieu pour le {{ plage.date | date }}.</td></tr>
+          <tr><td>Vous recevez ce message parce que vous avez fait au moins une demande d’intervention dans votre milieu pour {{ plage.date | date }}.</td></tr>
           <tr><td>La ou les interventions devraient avoir lieu comme prévu, à moins d’avis contraire de la permanence du GRIS-QC.</td></tr>
           <tr><td class="horizontal-margin"></td><tr>
           <tr><td>Merci de faire appel à nos services!</td></tr>

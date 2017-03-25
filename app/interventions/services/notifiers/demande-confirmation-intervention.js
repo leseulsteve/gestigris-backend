@@ -33,12 +33,18 @@ function getIntervention(interventionId) {
 }
 
 
-function createConversation(benevoleId, user, subject, message) {
+function createConversation(demandeParticipation, user, subject, message) {
   return ConversationService.create({
-    participants: [benevoleId, user._id],
+    participants: [demandeParticipation.benevole, user._id],
     type: 'private',
     title: subject,
-    message: message
+    message: message,
+    attachements: [{
+      type: 'message-attachement-intervention',
+      data: {
+        intervention: demandeParticipation.intervention
+      }
+    }]
   }, user);
 }
 
@@ -81,7 +87,7 @@ module.exports = {
 
           return q.all([
 
-            createConversation(demandeParticipation.benevole, user, subject, message),
+            createConversation(demandeParticipation, user, subject, message),
             getDemandesParticipation(demandeParticipation._id, intervention._id)
 
           ]).then(function(results) {

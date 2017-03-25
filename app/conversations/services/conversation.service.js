@@ -17,9 +17,10 @@ module.exports = {
           author: user._id,
           conversation: conversation._id,
           body: params.message,
+          attachements: params.attachements,
           readBy: [user._id]
         }).then(function() {
-          return that.findById(conversation._id);
+          return that.findById(conversation._id, user);
         });
       })
       .catch(function(error) {
@@ -30,18 +31,28 @@ module.exports = {
       });
   },
 
-  findById: function(id) {
+  findById: function(id, user) {
     return this.find({
       _id: id
-    }).then(_.first);
+    }, user).then(_.first);
   },
 
-  find: function(query) {
+  find: function(query, user) {
+
+    if (!_.isUndefined(query.archived)) {
+      query.archivedFor = query.archived ? user._id : {
+        $ne: user._id
+      };
+    }
     return Conversation
-      .find(query)
+      .find(_.omit(query, 'archived'))
       .sort('-createdAt')
       .select('-__v -_type')
-      .exec()
+      .then(function(conversations) {
+        return _.map(conversations, function(conversation) {
+          return _.omit(conversation.setArchivedStatus(user).toObject(), 'archivedFor');
+        });
+      })
       .catch(function(error) {
         return q.reject({
           code: 400,
@@ -50,20 +61,27 @@ module.exports = {
       });
   },
 
-  update: function(id, params) {
+  update: function(id, params, user) {
     var that = this;
     return Conversation.findById(id)
       .then(function(plage) {
+        if (params.archived) {
+          _.assign(plage, {
+            archivedFor: _.uniqBy((plage.archivedFor || []).concat(user._id), function(userId) {
+              return userId.toString();
+            })
+          });
+        }
         return _.assign(plage, params)
           .save()
           .then(function() {
-            return that.findById(id);
+            return that.findById(id, user);
           })
       })
       .catch(function(error) {
         return q.reject({
           code: 400,
-          reason: error.message
+          reason: error.message || error
         })
       });
   }
