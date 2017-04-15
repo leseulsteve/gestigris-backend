@@ -23,6 +23,14 @@ var BenevoleSchema = new Schema({
     type: Date,
     required: true
   },
+  sexe: {
+    type: String,
+    enum: ['homme', 'femme']
+  },
+  orientation: {
+    type: String,
+    enum: ['homosexuel', 'bisexuel']
+  },
   voiture: {
     type: Boolean,
     default: false

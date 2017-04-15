@@ -39,6 +39,8 @@ expressBase.init(config.expressBase, function(app, express) {
       app.use('/api/v1/conversation', require('./app/conversations')(express.Router(), socket));
     });*/
 
+  app.use('/api/v1/config', new crudRouter(express, require('./app/core/services/config.service')));
+
   var conversationModule = require('./app/conversations');
   app.use('/api/v1/conversation', new crudRouter(express, conversationModule.conversation));
   app.use('/api/v1/message', new crudRouter(express, conversationModule.message));

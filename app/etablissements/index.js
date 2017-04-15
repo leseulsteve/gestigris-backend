@@ -72,6 +72,7 @@ module.exports = {
   },
 
   update: function(id, params) {
+    console.log(params);
     var that = this;
     return Etablissement.findById(id)
       .then(function(etablissement) {

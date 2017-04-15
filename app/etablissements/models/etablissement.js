@@ -20,7 +20,8 @@ var EtablissementSchema = new Schema({
   },
   commissionScolaire: {
     type: Schema.ObjectId,
-    ref: 'commission-scolaire'
+    ref: 'commission-scolaire',
+    default: null
   },
   address: {
     street: {
